@@ -2,7 +2,7 @@ import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword,
 import { createContext, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import auth from "../../firebase/firebase.config";
-import useAxiosSecure from "../../custom-hooks/use-axios-secure/useAxiosSecure";
+import useAxiosPublic from "../../custom-hooks/use-axios-public/useAxiosPublic";
 
 export const UserAuth = createContext({});
 const googleProvider = new GoogleAuthProvider();
@@ -11,7 +11,7 @@ const githubProvider = new GithubAuthProvider();
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const axiosSecure = useAxiosSecure();
+    const axiosPublic = useAxiosPublic();
 
     // create user with and password
     const userWithEmail = (email, password) => {
@@ -67,13 +67,13 @@ const AuthProvider = ({ children }) => {
             setLoading(false);
             // if user exitst then issue a token
             if (loggeduser.email) {
-                axiosSecure.post('/jwt', loggeduser)
+                axiosPublic.post('/jwt', loggeduser)
                     .then(res => {
                         console.log('token response', res.data);
                         console.log(res?.data);
                     })
             } else {
-                axiosSecure.post('/logout', loggeduser)
+                axiosPublic.post('/logout', loggeduser)
                     .then(res => {
                         console.log(res.data);
                     })
