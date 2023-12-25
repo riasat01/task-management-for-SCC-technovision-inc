@@ -57,8 +57,11 @@ const Dashboard = () => {
 
     return (
         <div className="mt-24">
-            <AddTask addATask={addATask}></AddTask>
-            <section className="grid grid-cols-3 gap-6 px-8 md:px-12 lg:px-24 mt-12">
+            <section className="flex flex-col md:flex-row justify-center items-center">
+                <img className="w-96 h-96 p-8 rounded-full" src={user?.photoURL} alt="" />
+                <AddTask addATask={addATask}></AddTask>
+            </section>
+            <section className="grid grid-cols-1 md:grid-cols-3 gap-6 px-8 md:px-12 lg:px-24 mt-12">
                 <Tasks tasks={todo} title='To-Do'></Tasks>
                 <Tasks tasks={ongoing} title='Ongoing'></Tasks>
                 <Tasks tasks={completed} title='Completed'></Tasks>

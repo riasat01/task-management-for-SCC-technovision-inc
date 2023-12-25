@@ -7,6 +7,7 @@ import PrivateRoute from "../private-route/PrivateRoute";
 import LoginPage from "../../pages/login-page/LoginPage";
 import Login from "../../pages/login-page/login/Login";
 import Register from "../../pages/login-page/register/Register";
+import Profile from "../../pages/profile/Profile";
 
 
 const MainRoute = createBrowserRouter([
@@ -22,6 +23,10 @@ const MainRoute = createBrowserRouter([
             {
                 path: '/dashboard',
                 element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
+            },
+            {
+                path: '/profile',
+                element: <PrivateRoute><Profile></Profile></PrivateRoute>
             },
             {
                 path: '/login',

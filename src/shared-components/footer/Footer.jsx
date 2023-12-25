@@ -31,6 +31,16 @@ const Footer = () => {
                                 Dashboard
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink
+                                to="/profile"
+                                className={({ isActive, isPending }) =>
+                                    isPending ? "pending" : isActive ? "text-lg text-transparent font-semibold duration-500 bg-gradient-to-tr from-pink-600 to-pink-400 bg-clip-text drop-shadow-lg" : "text-white font-normal duration-500"
+                                }
+                            >
+                            Profile
+                            </NavLink>
+                        </li>
                     </ul>
                     <p className='font-comforta text-white px-6 text-center'>Taskify 123 Productivity Lane, Innovation City, Efficiency State</p>
                     <section className='flex justify-center items-center gap-6 text-white text-3xl'>

@@ -47,6 +47,16 @@ const Navabar = () => {
                 Dashboard
             </NavLink>
         </li>
+        <li>
+            <NavLink
+                to="/profile"
+                className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "text-lg text-transparent font-semibold duration-500 bg-gradient-to-tr from-pink-600 to-pink-400 bg-clip-text drop-shadow-lg" : "text-white font-normal duration-500"
+                }
+            >
+                Profile
+            </NavLink>
+        </li>
     </>
     return (
         <section className='fixed w-full inset-0 z-10 h-fit font-comforta'>
