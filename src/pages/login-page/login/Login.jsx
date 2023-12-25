@@ -2,14 +2,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { FcGoogle } from 'react-icons/fc';
 import loginBg from '../../../assets/banner-bg.jpeg';
-import useAxiosPublic from "../../../custom-hooks/use-axios-public/useAxiosPublic";
 import { FaGithub } from "react-icons/fa";
 import useAuth from "../../../custom-hooks/use-auth/useAuth";
 
 const Login = () => {
     const { user, setLoading, loginWithEMail, continueWithGoogle, continueWithGithub } = useAuth();
     const navigate = useNavigate();
-    const axiosPublic = useAxiosPublic();
 
     // where to re route
     const location = useLocation();
@@ -35,13 +33,9 @@ const Login = () => {
         callback()
             .then(userCredential => {
                 console.log(userCredential.user);
-                axiosPublic.post('/user', { imageURL: userCredential?.user?.photoURL, name: userCredential?.user?.displayName, email: userCredential?.user?.email, role: 'user' })
-                    .then(res => {
-                        console.log(res);
-                        setLoading(false);
-                        swal(`Congratulation ${userCredential?.user?.displayName}`, `You have successfully signed in with Google`, `success`)
-                        location?.state ? navigate(`${location?.state}`) : navigate(`/`);
-                    })
+                setLoading(false);
+                swal(`Congratulation ${userCredential?.user?.displayName}`, `You have successfully signed in with Google`, `success`)
+                location?.state ? navigate(`${location?.state}`) : navigate(`/`);
 
             })
             .catch(error => {

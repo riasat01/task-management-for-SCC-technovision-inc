@@ -14,6 +14,7 @@ const Dashboard = () => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
 
+    // fetching data
     const { data: tasks = {}, refetch } = useQuery({
         queryKey: ['tasks'],
         queryFn: async () => {
@@ -30,6 +31,7 @@ const Dashboard = () => {
         }
     })
 
+    // adding a task
     const addATask = task => {
         const info = {
             ...task,
@@ -54,6 +56,7 @@ const Dashboard = () => {
         console.log(info);
     }
 
+    // drop handler
     const handleDrop = (e, ref) => {
         e?.preventDefault();
         const id =e.dataTransfer.getData('id');
@@ -70,17 +73,26 @@ const Dashboard = () => {
         .catch(error => console.log(error));
     }
 
+    // delete handler
+    const handleDelete = id => {
+        axiosSecure.delete(`/task/${id}`)
+        .then(res => {
+            refetch();
+            swal('Deleted', 'Task deleted successfully', 'info');
+            console.log(res?.data);
+        })
+    }
 
     return (
-        <div className="mt-24">
+        <div className="pt-24">
             <section className="flex flex-col md:flex-row justify-center items-center">
                 <img className="w-96 h-96 p-8 rounded-full" src={user?.photoURL} alt="" />
                 <AddTask addATask={addATask}></AddTask>
             </section>
             <section className="grid grid-cols-1 md:grid-cols-3 gap-6 px-8 md:px-12 lg:px-24 mt-12">
-                <Tasks handleDrop={handleDrop} tasks={todo} title='To-Do'></Tasks>
-                <Tasks handleDrop={handleDrop} tasks={ongoing} title='Ongoing'></Tasks>
-                <Tasks handleDrop={handleDrop} tasks={completed} title='Completed'></Tasks>
+                <Tasks handleDrop={handleDrop} handleDelete={handleDelete} tasks={todo} title='To-Do'></Tasks>
+                <Tasks handleDrop={handleDrop} handleDelete={handleDelete} tasks={ongoing} title='Ongoing'></Tasks>
+                <Tasks handleDrop={handleDrop} handleDelete={handleDelete} tasks={completed} title='Completed'></Tasks>
             </section>
         </div>
     );
