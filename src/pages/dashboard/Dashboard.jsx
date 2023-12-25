@@ -54,6 +54,22 @@ const Dashboard = () => {
         console.log(info);
     }
 
+    const handleDrop = (e, ref) => {
+        e?.preventDefault();
+        const id =e.dataTransfer.getData('id');
+        const formatedId = id?.slice(1, -1);
+        const status = ref?.children[0]?.innerText;
+        console.log(e?.target);
+        console.log(ref?.children[0]?.innerText);
+        console.log(e.dataTransfer.getData('id'));
+        axiosSecure.put(`/task/status/${formatedId}`, {status: status})
+        .then(res => {
+            console.log(res?.data);
+            refetch();
+        })
+        .catch(error => console.log(error));
+    }
+
 
     return (
         <div className="mt-24">
@@ -62,9 +78,9 @@ const Dashboard = () => {
                 <AddTask addATask={addATask}></AddTask>
             </section>
             <section className="grid grid-cols-1 md:grid-cols-3 gap-6 px-8 md:px-12 lg:px-24 mt-12">
-                <Tasks tasks={todo} title='To-Do'></Tasks>
-                <Tasks tasks={ongoing} title='Ongoing'></Tasks>
-                <Tasks tasks={completed} title='Completed'></Tasks>
+                <Tasks handleDrop={handleDrop} tasks={todo} title='To-Do'></Tasks>
+                <Tasks handleDrop={handleDrop} tasks={ongoing} title='Ongoing'></Tasks>
+                <Tasks handleDrop={handleDrop} tasks={completed} title='Completed'></Tasks>
             </section>
         </div>
     );
